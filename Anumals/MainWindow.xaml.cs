@@ -53,35 +53,59 @@ namespace Anumals
 
             List<string> animalEmoji = new List<string>()
             {
-               "🐲" , "🐲" ,
-               "🦄" , "🦄" ,
-               "🦁" , "🦁" ,
-               "🦒" , "🦒" ,
-               "🦝" , "🦝" ,
-               "🐷" , "🐷" ,
-               "🐸" , "🐸" ,
-               "🐮" , "🐮" ,
+               "🐲" , "🐵" ,
+               "🦄" , "👻" ,
+               "🦁" , "👽" ,
+               "🦒" , "🦏" ,
+               "🦝" , "🐳" ,
+               "🐷" , "🐰" ,
+               "🐸" , "🦀" ,
+               "🐮" , "🦨" ,
+               "🐼" , "🦥" ,
+               "🐶" , "🦐" ,
             };
 
             Random random = new Random();
+            Random nerandom = new Random();
 
-            foreach (TextBlock textBlock in mainGrid.Children.OfType<TextBlock>())
+            int t = 0;
+            while (t < 17)
+            {
+                int index = 0;
+                int y = 0;
+                foreach (TextBlock textBlock in mainGrid.Children.OfType<TextBlock>().OrderBy(x => nerandom.Next()))
 
-                if (textBlock.Name != "TimeTextBlock")
+                {
+
+                    if (textBlock.Name != "TimeTextBlock")
                     {
+                        textBlock.Visibility = Visibility.Visible;
+                        textBlock.IsEnabled = true;
+                        if(y == 0)
                         {
-                            textBlock.Visibility = Visibility.Visible;
-                            int index = random.Next(animalEmoji.Count);
+                            index = random.Next(animalEmoji.Count);
+                            string nextEmoji = animalEmoji[index];
+                            y++;
+                        }
+                        if (y < 3 && y > 0)
+                        {
                             string nextEmoji = animalEmoji[index];
                             textBlock.Text = nextEmoji;
+                            y++;
+                        }
+                        if (y == 3)
+                        {
                             animalEmoji.RemoveAt(index);
-                            textBlock.IsEnabled = true;
+                            y = 0;
                         }
                     }
-                else
-                {
-                    textBlock.IsEnabled = true;
+                    else
+                    {
+                        textBlock.IsEnabled = true;
+                    }
                 }
+                t += 100;
+            }
 
 
             timer.Start();
@@ -92,6 +116,7 @@ namespace Anumals
 
         TextBlock lastTextBlockClikcked;
         bool findingMatch = false;
+
 
         private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -117,6 +142,7 @@ namespace Anumals
                 lastTextBlockClikcked.Background = Brushes.Transparent;
                 lastTextBlockClikcked.IsEnabled = true;
                 findingMatch = false;
+
             }
         }
 

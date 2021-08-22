@@ -42,7 +42,14 @@
         <TextBlock Grid.Column="2" HorizontalAlignment="Center" Grid.Row="3" Text="?" VerticalAlignment="Center" FontSize="36" MouseDown="TextBlock_MouseDown"/>
         <TextBlock Grid.Column="3" HorizontalAlignment="Center" Grid.Row="3" Text="?" VerticalAlignment="Center" FontSize="36" MouseDown="TextBlock_MouseDown"/>
         <TextBlock x:Name="TimeTextBlock" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" Text="Elapsed time" VerticalAlignment="Center" FontSize="36" Grid.ColumnSpan="4" MouseDown="TimeTextBlock_MouseDown"/>
-        <Button x:Name="startButton" Content="Start!" HorizontalAlignment="Left" Margin="86,0,0,0" Grid.Row="4" VerticalAlignment="Top" Width="221" Grid.ColumnSpan="4" Background="#FFFFCC45" BorderBrush="#FF00FFD1" Height="73" FontFamily="Algerian" FontSize="20" Click="startButton_Click"/>
+        <Button x:Name="startButton" Content="Start!" HorizontalAlignment="Left" Margin="86,0,0,0" Grid.Row="4" VerticalAlignment="Top" Width="221" Grid.ColumnSpan="4" Background="#FFFFCC45" Height="73" FontFamily="Algerian" FontSize="20" Click="startButton_Click">
+            <Button.BorderBrush>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF5EFF45" Offset="0"/>
+                    <GradientStop Color="#FF05EEB9" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.BorderBrush>
+        </Button>
 
     </Grid>
 </Window>
