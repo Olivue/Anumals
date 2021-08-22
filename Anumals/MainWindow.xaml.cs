@@ -27,14 +27,14 @@ namespace Anumals
         DispatcherTimer timer = new DispatcherTimer();
         int tenthsOfSecondsElapsed;
         int matchesFound = 0;
-        
         public MainWindow()
         {
             InitializeComponent();
 
             timer.Interval = TimeSpan.FromSeconds(.1);
             timer.Tick += Timer_Tick;
-            SetUpGame();
+            foreach (TextBlock textBlock in mainGrid.Children.OfType<TextBlock>())
+                textBlock.IsEnabled = false;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -50,6 +50,7 @@ namespace Anumals
 
         private void SetUpGame()
         {
+
             List<string> animalEmoji = new List<string>()
             {
                "🐲" , "🐲" ,
@@ -67,19 +68,26 @@ namespace Anumals
             foreach (TextBlock textBlock in mainGrid.Children.OfType<TextBlock>())
 
                 if (textBlock.Name != "TimeTextBlock")
-                {
                     {
-                        textBlock.Visibility = Visibility.Visible;
-                        int index = random.Next(animalEmoji.Count);
-                        string nextEmoji = animalEmoji[index];
-                        textBlock.Text = nextEmoji;
-                        animalEmoji.RemoveAt(index);
+                        {
+                            textBlock.Visibility = Visibility.Visible;
+                            int index = random.Next(animalEmoji.Count);
+                            string nextEmoji = animalEmoji[index];
+                            textBlock.Text = nextEmoji;
+                            animalEmoji.RemoveAt(index);
+                            textBlock.IsEnabled = true;
+                        }
                     }
+                else
+                {
+                    textBlock.IsEnabled = true;
                 }
+
 
             timer.Start();
             tenthsOfSecondsElapsed = 0;
             matchesFound = 0;
+            startButton.Visibility = Visibility.Hidden;
         }
 
         TextBlock lastTextBlockClikcked;
@@ -91,19 +99,23 @@ namespace Anumals
             if (findingMatch == false)
 
             {
-                textBlock.Visibility = Visibility.Hidden;
+                textBlock.Background = Brushes.LemonChiffon;
                 lastTextBlockClikcked = textBlock;
                 findingMatch = true;
+                lastTextBlockClikcked.IsEnabled = false;
             }
             else if (textBlock.Text == lastTextBlockClikcked.Text)
             {
                 matchesFound++;
                 textBlock.Visibility = Visibility.Hidden;
+                lastTextBlockClikcked.Background = Brushes.Transparent;
+                lastTextBlockClikcked.Visibility = Visibility.Hidden;
                 findingMatch = false;
             }
             else
             {
-                lastTextBlockClikcked.Visibility = Visibility.Visible;
+                lastTextBlockClikcked.Background = Brushes.Transparent;
+                lastTextBlockClikcked.IsEnabled = true;
                 findingMatch = false;
             }
         }
@@ -114,6 +126,11 @@ namespace Anumals
             {
                 SetUpGame();
             }
+        }
+
+        private void startButton_Click(object sender, RoutedEventArgs e)
+        {
+            SetUpGame();
         }
     }
 }
